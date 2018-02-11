@@ -15,7 +15,7 @@
   * [Symfony 3](symfony-3.md)
   * [Django](django.md)
 * [OS](os.md)
-  * Ubuntu
+  * [Ubuntu](os/ubuntu.md)
 * [Sách](sach.md)
   * [Sách để hiểu con hơn](sach/sach-con.md)
 * Tool
