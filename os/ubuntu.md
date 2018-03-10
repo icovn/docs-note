@@ -272,6 +272,14 @@ sudo mysqladmin -S /var/run/mysqld/mysqld.sock shutdown
 
 sudo service mysql start
 
+
+
+\#Upload artifact to Nexus Sonatype by CURL
+
+curl -v -u admin:admin123 --upload-file bcprov-jdk-1.0-RELEASE.jar http://localhost:8081/repository/3rd/net/friend/bcprov-jdk/1.0-RELEASE/bcprov-jdk-1.0-RELEASE.jar
+
+
+
 huynq12pass
 
 [https://hn25.topicanative.edu.vn/bigbluebutton/api/configXML?a=1508838986286](https://hn25.topicanative.edu.vn/bigbluebutton/api/configXML?a=1508838986286)
