@@ -274,9 +274,15 @@ sudo service mysql start
 
 
 
+
+
 \#Upload artifact to Nexus Sonatype by CURL
 
-curl -v -u admin:admin123 --upload-file bcprov-jdk-1.0-RELEASE.jar http://localhost:8081/repository/3rd/net/friend/bcprov-jdk/1.0-RELEASE/bcprov-jdk-1.0-RELEASE.jar
+curl -v -u admin:admin123 --upload-file bcprov-jdk-1.0-RELEASE.jar [http://localhost:8081/repository/3rd/net/friend/bcprov-jdk/1.0-RELEASE/bcprov-jdk-1.0-RELEASE.jar](http://localhost:8081/repository/3rd/net/friend/bcprov-jdk/1.0-RELEASE/bcprov-jdk-1.0-RELEASE.jar)
+
+curl -v -u admin:admin123 --upload-file ojdbc7-12.1.0.1.jar http://localhost:8081/repository/3rd/net/friend/ojdbc7/12.1.0.1/ojdbc7-12.1.0.1.jar
+
+
 
 
 
