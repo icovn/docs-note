@@ -2,7 +2,7 @@
 
 /\*1. GET INFORMATION\*/
 
------------------------------------------------------------------------
+---
 
 \#\#run without install
 
@@ -50,7 +50,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'otCK7aUP3jhR' PASSWORD EXPIRE INTER
 
 /\*2. RESET ROOT PASSWORD\*/
 
------------------------------------------------------------------------
+---
 
 mysqld\_safe --skip-grant-tables
 
@@ -58,13 +58,15 @@ mysql --user=root mysql
 
 update user set Password=PASSWORD\('new-password'\) where user='root';
 
+update user set authentication\_string=password\('password'\) where user='root';
+
 flush privileges;
 
 /\*------------------------------------------------------------------------------------------------------------------------------------\*/
 
 /\*3. EXPORT IMPORT DATABASE\*/
 
------------------------------------------------------------------------
+---
 
 \#export
 
@@ -91,8 +93,6 @@ mysqldump -u mediadbu -p'Application@123!@\#' charging\_log kc\_sms\_mt\_history
 mysqldump db\_name table\_name \| gzip &gt; table\_name.sql.gz
 
 gunzip &lt; table\_name.sql.gz \| mysql -u username -p db\_name
-
-
 
 mysql --socket=/u01/mysql-5.6.26/mysql.sock --port=3306 -u mediadbu -p'Application@123!@\#' charging\_log -e "SELECT \* INTO OUTFILE '/u01/mysql-backup/kc\_sms\_mt\_history\_bk\_092015.csv' FIELDS TERMINATED BY '\|' LINES TERMINATED BY '\n' FROM kc\_sms\_mt\_history\_bk\_092015"
 
@@ -134,21 +134,19 @@ gzip /u01/mysql-backup/kc\_sms\_mt\_history\_bk\_052016.csv
 
 /\*4. OTHERS\*/
 
------------------------------------------------------------------------
+---
 
 \#\#clone/copy table
 
 \#To copy with indexes and triggers
 
-CREATE TABLE newtable LIKE oldtable; 
+CREATE TABLE newtable LIKE oldtable;
 
 INSERT newtable SELECT \* FROM oldtable;
 
 \#To copy just structure and data
 
 CREATE TABLE tbl\_new AS SELECT \* FROM tbl\_old;
-
-
 
 \#\#disable foreign check
 
@@ -232,19 +230,21 @@ SET GLOBAL long\_query\_time=3;
 
 \#\#check plugin
 
-SELECT 
+SELECT
 
-	PLUGIN\_NAME AS NAME, 
+```
+PLUGIN\_NAME AS NAME, 
 
-	PLUGIN\_VERSION AS VERSION, 
+PLUGIN\_VERSION AS VERSION, 
 
-	PLUGIN\_STATUS AS STATUS 
+PLUGIN\_STATUS AS STATUS 
+```
 
-FROM INFORMATION\_SCHEMA.PLUGINS 
+FROM INFORMATION\_SCHEMA.PLUGINS
 
 WHERE PLUGIN\_TYPE='STORAGE ENGINE';
 
------------------------------------------------------------------------
+---
 
 \#\#Start up MySQL in rescue mode
 
@@ -272,71 +272,73 @@ InnoDB: !!! innodb\_force\_recovery is set to 6 !!!
 
 Version: ‘5.0.18’ socket: ‘/var/lib/mysql/mysql.sock’ port: 3306 SUSE MySQL
 
------------------------------------------------------------------------
+---
 
 CREATE TABLE \`vt\_ga\_log\` \(
 
-	\`created\_at\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`created\_at\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`action\` VARCHAR\(12\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`action\` VARCHAR\(12\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`ip\` VARCHAR\(20\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`ip\` VARCHAR\(20\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`url\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`url\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`msisdn\` VARCHAR\(12\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`msisdn\` VARCHAR\(12\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`result\` VARCHAR\(2\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`result\` VARCHAR\(2\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`ga\_url\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`ga\_url\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`query\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
+    \`query\` VARCHAR\(255\) COLLATE latin1\_general\_ci DEFAULT NULL,
 
-	\`inserted\_at\` DATETIME DEFAULT NULL,
+    \`inserted\_at\` DATETIME DEFAULT NULL,
 
-	\`is\_3g\` TINYINT\(1\) DEFAULT NULL,
+    \`is\_3g\` TINYINT\(1\) DEFAULT NULL,
 
-	KEY \`url\` \(\`url\`\),
+    KEY \`url\` \(\`url\`\),
 
-	KEY \`action\` \(\`action\`\),
+    KEY \`action\` \(\`action\`\),
 
-	KEY \`msisdn\` \(\`msisdn\`\)
+    KEY \`msisdn\` \(\`msisdn\`\)
 
 \) ENGINE=INNODB DEFAULT CHARSET=latin1 COLLATE=latin1\_general\_ci
 
-PARTITION BY RANGE\( MONTH\(inserted\_at\) \) 
+PARTITION BY RANGE\( MONTH\(inserted\_at\) \)
 
 SUBPARTITION BY HASH\( TO\_DAYS\(inserted\_at\) \)
 
-SUBPARTITIONS 2 \(	
+SUBPARTITIONS 2 \(
 
-	PARTITION p1 VALUES LESS THAN \(2\),
+```
+PARTITION p1 VALUES LESS THAN \(2\),
 
-	PARTITION p2 VALUES LESS THAN \(3\),
+PARTITION p2 VALUES LESS THAN \(3\),
 
-	PARTITION p3 VALUES LESS THAN \(4\),
+PARTITION p3 VALUES LESS THAN \(4\),
 
-	PARTITION p4 VALUES LESS THAN \(5\),
+PARTITION p4 VALUES LESS THAN \(5\),
 
-	PARTITION p5 VALUES LESS THAN \(6\),
+PARTITION p5 VALUES LESS THAN \(6\),
 
-	PARTITION p6 VALUES LESS THAN \(7\),
+PARTITION p6 VALUES LESS THAN \(7\),
 
-	PARTITION p7 VALUES LESS THAN \(8\),
+PARTITION p7 VALUES LESS THAN \(8\),
 
-	PARTITION p8 VALUES LESS THAN \(9\),
+PARTITION p8 VALUES LESS THAN \(9\),
 
-	PARTITION p9 VALUES LESS THAN \(10\),
+PARTITION p9 VALUES LESS THAN \(10\),
 
-	PARTITION p10 VALUES LESS THAN \(11\),
+PARTITION p10 VALUES LESS THAN \(11\),
 
-	PARTITION p11 VALUES LESS THAN \(12\),
+PARTITION p11 VALUES LESS THAN \(12\),
 
-	PARTITION p12 VALUES LESS THAN MAXVALUE
+PARTITION p12 VALUES LESS THAN MAXVALUE
+```
 
 \);
 
------------------------------------------------------------------------
+---
 
 -- find not UNICODE \(ASCII\)
 
@@ -346,7 +348,7 @@ and name = CONVERT\(name USING ASCII\)
 
 order by id desc;
 
------------------------------------------------------------------------
+---
 
 -- random
 
