@@ -2,6 +2,12 @@
 
 ANDROID\_HOME=/home/huynq12/Android/Sdk
 
+or
+
+\#create file local.properties with this type of content
+
+sdk.dir=/home/huynq12/Android/Sdk
+
 \#then run with emulator
 
 react-native run-android
@@ -25,4 +31,10 @@ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-
 \#\#fedora
 
 sudo yum install zlib.i686 ncurses-libs.i686 bzip2-libs.i686
+
+
+
+\#adb: not found
+
+\#\#add ~/Android/Sdk/platform-tools to PATH
 
