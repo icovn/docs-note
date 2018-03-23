@@ -1,7 +1,7 @@
 # Summary
 
 * [Giới thiệu](README.md)
-* [open-source](chapter1.md)
+* [Open source](chapter1.md)
 * [Database & Storage](sach-de-hieu-con-hon.md)
   * [Cassandra](sach-de-hieu-con-hon/cassandra.md)
   * [Mongodb](sach-de-hieu-con-hon/mongodb.md)

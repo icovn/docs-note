@@ -1,3 +1,11 @@
+\#security
+
+sudo iptables -L
+
+ufw  status
+
+
+
 \#common
 
 \#\#install from .deb
@@ -278,33 +286,31 @@ curl -v -u admin:admin123 --upload-file bcprov-jdk-1.0-RELEASE.jar [http://local
 
 curl -v -u admin:admin123 --upload-file ojdbc7-12.1.0.1.jar [http://localhost:8081/repository/3rd/net/friend/ojdbc7/12.1.0.1/ojdbc7-12.1.0.1.jar](http://localhost:8081/repository/3rd/net/friend/ojdbc7/12.1.0.1/ojdbc7-12.1.0.1.jar)
 
-
-
 \#Maven always refresh
 
-  &lt;profile&gt;
+&lt;profile&gt;
+
+```
+  &lt;id&gt;maven-localhost&lt;/id&gt;
+
+  &lt;repositories&gt;
+
+    &lt;repository&gt;
 
       &lt;id&gt;maven-localhost&lt;/id&gt;
 
-      &lt;repositories&gt;
+      &lt;url&gt;http://localhost:8081/repository/3rd/&lt;/url&gt;
 
-        &lt;repository&gt;
+      &lt;releases&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;updatePolicy&gt;always&lt;/updatePolicy&gt;&lt;/releases&gt;
 
-          &lt;id&gt;maven-localhost&lt;/id&gt;
+      &lt;snapshots&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;updatePolicy&gt;always&lt;/updatePolicy&gt;&lt;/snapshots&gt;
 
-          &lt;url&gt;http://localhost:8081/repository/3rd/&lt;/url&gt;
+    &lt;/repository&gt;
 
-          &lt;releases&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;updatePolicy&gt;always&lt;/updatePolicy&gt;&lt;/releases&gt;
+  &lt;/repositories&gt;
 
-          &lt;snapshots&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;updatePolicy&gt;always&lt;/updatePolicy&gt;&lt;/snapshots&gt;
-
-        &lt;/repository&gt;
-
-      &lt;/repositories&gt;
-
-    &lt;/profile&gt;
-
-
+&lt;/profile&gt;
+```
 
 huynq12pass
 
