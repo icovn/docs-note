@@ -4,8 +4,6 @@ sudo iptables -L
 
 ufw  status
 
-
-
 \#common
 
 \#\#install from .deb
@@ -25,6 +23,24 @@ lsb\_release -a
 \#\#get application location
 
 dpkg -L subli&lt;tab&gt;
+
+\#mysql
+
+\#\#install
+
+sudo apt-get update
+
+sudo apt-get install mysql-server
+
+mysql\_secure\_installation
+
+\#nginx
+
+\#\#install
+
+sudo apt-get update
+
+sudo apt-get install nginx
 
 \#ibus-unikey
 
