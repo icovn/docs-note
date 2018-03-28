@@ -42,6 +42,12 @@ sudo apt-get update
 
 sudo apt-get install nginx
 
+\#redis
+
+\#\#install
+
+sudo apt-get install redis-server
+
 \#ibus-unikey
 
 \#\#install
