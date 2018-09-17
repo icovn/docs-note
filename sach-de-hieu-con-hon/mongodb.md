@@ -1,14 +1,10 @@
 \#docs
 
-https://docs.mongodb.com/?\_ga=1.197440680.665327511.1472453965
-
-
+[https://docs.mongodb.com/?\_ga=1.197440680.665327511.1472453965](https://docs.mongodb.com/?_ga=1.197440680.665327511.1472453965)
 
 \#presentation
 
-https://www.mongodb.com/presentations?\_ga=1.197440680.665327511.1472453965
-
-
+[https://www.mongodb.com/presentations?\_ga=1.197440680.665327511.1472453965](https://www.mongodb.com/presentations?_ga=1.197440680.665327511.1472453965)
 
 Cài đặt mongodb ở: /u01/applications/mongodb-3.0.6/
 
@@ -16,19 +12,17 @@ Data để ở: /u01/mongodb/data/
 
 Cấu hình Sharded Cluster:
 
-- Tạo config db folder:
+* Tạo config db folder:
 
 mkdir /u01/mongodb/configdb
 
-- Start config server
+* Start config server
 
 /u01/applications/mongodb-3.0.6/bin/mongod --fork --configsvr --dbpath /u01/mongodb/configdb --port 27019 --logpath /u01/mongodb/mongodb.log
 
-- Start mongos
+* Start mongos
 
 /u01/applications/mongodb-3.0.6/bin/mongos --fork --configdb 10.58.41.80:27019,10.58.41.81:27019,10.58.41.82:27019 --logpath /u01/mongodb/mongos.log
-
-
 
 /u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongo --port 27017
 
@@ -36,17 +30,11 @@ use admin
 
 db.shutdownServer\(\)
 
-
-
 /u01/applications/mongodb-3.0.6/bin/mongod --fork --dbpath /u01/mongodb-backup/ --logpath /u01/mongodb/mongodb.log
 
 db.collection.find\(\)
 
-
-
 /u01/applications/mongodb-test/bin/mongod --fork --dbpath /u01/mongodb-test/data --logpath /u01/mongodb-test/logs/mongodb.log --port 17017
-
-
 
 \#create user:
 
@@ -54,83 +42,77 @@ use football\_bet;
 
 db.createUser\( { user: "football",
 
-                 pwd: "eOQ&lWB^aTG9",
+```
+             pwd: "eOQ&lWB^aTG9",
 
-                 customData: { site: "choieuro" },
+             customData: { site: "choieuro" },
 
-                 roles: \[ { role: "readAnyDatabase", db: "admin" },
+             roles: \[ { role: "readAnyDatabase", db: "admin" },
 
-                          "readWrite"\] },
+                      "readWrite"\] },
 
-               { w: "majority" , wtimeout: 5000 } \);
-
-
+           { w: "majority" , wtimeout: 5000 } \);
+```
 
 \#grant role
 
 use admin;
 
-db.createUser\( { 
+db.createUser\( {
 
-	user: "icovn",
+```
+user: "icovn",
 
-	pwd: "iFY9\#SRuo%5W",
+pwd: "iFY9\#SRuo%5W",
 
-	customData: { site: "choieuro" },
+customData: { site: "choieuro" },
 
-	roles: \[ { role: "readAnyDatabase", db: "admin" }, "readWrite"\] 
+roles: \[ { role: "readAnyDatabase", db: "admin" }, "readWrite"\] 
 
-	},{ w: "majority" , wtimeout: 5000 } \);
+},{ w: "majority" , wtimeout: 5000 } \);
+```
 
 db.grantRolesToUser\(
 
-   "icovn",
+"icovn",
 
-   \[ { role: "dbOwner", db: "admin" }, { role: "dbOwner", db: "football\_bet" }, { role: "dbOwner", db: "test" }\],
+\[ { role: "dbOwner", db: "admin" }, { role: "dbOwner", db: "football\_bet" }, { role: "dbOwner", db: "test" }\],
 
-   { w: "majority" , wtimeout: 4000 }
+{ w: "majority" , wtimeout: 4000 }
 
 \);
 
 db.grantRolesToUser\(
 
-   "football",
+"football",
 
-   \[ { role: "dbOwner", db: "football\_bet" }\],
+\[ { role: "dbOwner", db: "football\_bet" }\],
 
-   { w: "majority" , wtimeout: 4000 }
+{ w: "majority" , wtimeout: 4000 }
 
 \);
-
-
 
 \#\#run authen
 
-https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/
+[https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/](https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/)
 
-https://www.kernel.org/doc/Documentation/vm/transhuge.txt
+[https://www.kernel.org/doc/Documentation/vm/transhuge.txt](https://www.kernel.org/doc/Documentation/vm/transhuge.txt)
 
 echo never &gt; /sys/kernel/mm/transparent\_hugepage/enabled
 
 echo never &gt; /sys/kernel/mm/transparent\_hugepage/defrag
 
-/u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongod --fork --dbpath /u01/mongodb/data/ --logpath /u01/mongodb/logs/mongodb.log --auth 
-
-
+/u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongod --fork --dbpath /u01/mongodb/data/ --logpath /u01/mongodb/logs/mongodb.log --auth
 
 /u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongo admin --username icovn --password
 
 /u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongo football\_bet --username football --password
 
-
-
 db.getCollection\('system.users'\).find\({}\).limit\(10\);
 
+\#\#roles - [https://docs.mongodb.com/manual/reference/built-in-roles/](https://docs.mongodb.com/manual/reference/built-in-roles/)
 
-
-\#\#roles - https://docs.mongodb.com/manual/reference/built-in-roles/
-
-\#\#actions - https://docs.mongodb.com/manual/reference/privilege-actions/
+\#\#actions - [https://docs.mongodb.com/manual/reference/privilege-actions/](https://docs.mongodb.com/manual/reference/privilege-actions/)
 
 \#\#backup-script------------------------------------------------------------------------------------------------------
 
@@ -146,21 +128,15 @@ S3\_BUCKET\_NAME="bucketname"
 
 S3\_BUCKET\_PATH="mongodb-backups"
 
-
-
 \# Create backup
 
 $MONGODUMP\_PATH --host $HOST
-
-
 
 \# Add timestamp to backup
 
 mv dump mongodb-$HOSTNAME-$TIMESTAMP
 
 tar cf mongodb-$HOSTNAME-$TIMESTAMP.tar mongodb-$HOSTNAME-$TIMESTAMP
-
-
 
 \# Upload to S3
 
@@ -176,13 +152,17 @@ db.getCollectionNames\(\)
 
 db.runCommand\( {
 
-    create: "memberBet"
+```
+create: "memberBet"
+```
 
 } \)
 
 db.runCommand\( {
 
-    create: "memberMoney"
+```
+create: "memberMoney"
+```
 
 } \)
 
@@ -204,47 +184,41 @@ db.getCollection\('payBySmsResult'\).find\({ client\_mobile : { $ne: "0983825860
 
 db.getCollection\('payBySmsResult'\).find\({ client\_mobile : { $nin : \["0983825860", "0989080185"\] }}\).limit\(30\);
 
-
-
 db.getCollection\('payByMobileCardResult'\).find\({ member\_id : 1755}\).limit\(30\);
-
-
 
 db.getCollection\('payBySmsResult'\).find\({}\).limit\(300\);
 
 db.getCollection\('payByMobileCardResult'\).find\({}\).limit\(300\);
 
-
-
 db.getCollection\('memberBet'\).find\(\).snapshot\(\).forEach\(
 
-    function \(elem\) {
+```
+function \(elem\) {
 
-        db.getCollection\('memberBet'\).update\(
+    db.getCollection\('memberBet'\).update\(
 
-            {
+        {
 
-                \_id: elem.\_id
+            \_id: elem.\_id
 
-            },
+        },
 
-            {
+        {
 
-                $set: {
+            $set: {
 
-                    matchId: elem.match\_id
-
-                }
+                matchId: elem.match\_id
 
             }
 
-        \);
+        }
 
-    }
+    \);
+
+}
+```
 
 \);
-
-
 
 \#pagging
 
@@ -264,23 +238,17 @@ db.collection.createIndex\( { a: 1 }, { background: true } \)
 
 db.collection.getIndexes\(\)
 
-
-
 \#force to use particular index then explain
 
 db.people.find\(
 
-   { name: "John Doe", zipcode: { $gt: "63000" } }
+{ name: "John Doe", zipcode: { $gt: "63000" } }
 
 \).hint\( { zipcode: 1 } \).explain\("executionStats"\)
-
-
 
 \#check size of index in bytes
 
 db.collection.totalIndexSize\(\)
-
-
 
 \#count item
 
@@ -302,91 +270,93 @@ db.getCollection\('vaaalog'\).count\({ isRecognized: false, is3g: true}\)
 
 db.getCollection\('vaaalog'\).find\({ isRecognized: false, is3g: true}\)
 
-
-
 db.getCollection\('160128-ga-report'\).count\({action: 'access', msisdn: { $ne: '' }}\)
 
 db.getCollection\('160128-ga-report'\).aggregate\( \[
 
-    {	 
+```
+{     
 
-        $match: 
-
-        { 
-
-            $and: 
-
-            \[ 
-
-                { action: "access" }, 
-
-                { msisdn: { $ne: '' } },
-
-                { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel2.html' } },
-
-                { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel1.html' } },
-
-                { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/first.html' } },
-
-            \] 
-
-        } 
-
-    },
+    $match: 
 
     { 
 
-        $group: 
+        $and: 
 
-        { 
+        \[ 
 
-            \_id: "$gaUrl", count: { $sum: 1 } 
+            { action: "access" }, 
 
-        } 
+            { msisdn: { $ne: '' } },
 
-    }
+            { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel2.html' } },
+
+            { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel1.html' } },
+
+            { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/first.html' } },
+
+        \] 
+
+    } 
+
+},
+
+{ 
+
+    $group: 
+
+    { 
+
+        \_id: "$gaUrl", count: { $sum: 1 } 
+
+    } 
+
+}
+```
 
 \] \);
 
 db.getCollection\('160128-ga-report'\).aggregate\( \[
 
-    {	 
+```
+{     
 
-        $match: 
-
-        { 
-
-            $and: 
-
-            \[ 
-
-                { action: "access" }, 
-
-                { msisdn: { $eq: '' } },
-
-                { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel2.html' } },
-
-                { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel1.html' } },
-
-                { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/first.html' } },
-
-            \] 
-
-        } 
-
-    },
+    $match: 
 
     { 
 
-        $group: 
+        $and: 
 
-        { 
+        \[ 
 
-            \_id: "$gaUrl", count: { $sum: 1 } 
+            { action: "access" }, 
 
-        } 
+            { msisdn: { $eq: '' } },
 
-    }
+            { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel2.html' } },
+
+            { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/cancel1.html' } },
+
+            { gaUrl: { $ne: 'http://m.keeng.vn/hga.php/first.html' } },
+
+        \] 
+
+    } 
+
+},
+
+{ 
+
+    $group: 
+
+    { 
+
+        \_id: "$gaUrl", count: { $sum: 1 } 
+
+    } 
+
+}
+```
 
 \] \);
 
@@ -438,13 +408,9 @@ db.dropDatabase\(\)
 
 /u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongodump --db Keeng --archive=/u02/keeng.20161005.archive
 
-
-
 \#\#restore
 
 /u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongorestore --archive=/u02/keeng.20161005.archive --db Keeng
-
-
 
 \#\#export data
 
@@ -456,9 +422,15 @@ db.dropDatabase\(\)
 
 /u01/applications/mongodb-linux-x86\_64-3.2.4/bin/mongoexport -d keeng-log -c keeng\_alert\_subscriber --out /u02/backup\_database/keeng\_alert\_subscriber.json
 
+\#\#export remote data
 
+mongoexport.exe --host HOST --port PORT --username USERNAME --password PASSWORD --collection orders --db COLLECTION\_NAME --out OUTPUT.json
 
+\#\#import data
 
+mongoimport.exe --db test --collection COLLECTION\_NAME --file OUTPUT.json
+
+\#\#
 
 use football\_bet
 
@@ -470,7 +442,5 @@ db.getProfilingLevel\(\)
 
 db.system.profile.find\(\).limit\(10\).sort\( { ts : -1 } \)
 
-
-
-http://www.mkyong.com/mongodb/spring-data-mongodb-query-document/
+[http://www.mkyong.com/mongodb/spring-data-mongodb-query-document/](http://www.mkyong.com/mongodb/spring-data-mongodb-query-document/)
 
