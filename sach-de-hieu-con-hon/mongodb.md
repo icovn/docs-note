@@ -430,7 +430,7 @@ mongoexport.exe --host HOST --port PORT --username USERNAME --password PASSWORD 
 
 mongoimport.exe --db test --collection COLLECTION\_NAME --file OUTPUT.json
 
-\#\#
+\#\#others
 
 use football\_bet
 
